@@ -1,0 +1,12 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "scales": {
+      "$scaleId": {
+        ".read": "$scaleId.length >= 20",
+        ".write": "$scaleId.length >= 20"
+      }
+    }
+  }
+}

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b0f14">
+<title>NutriScale Coach — Nutrition & Sport</title>
+<style>
+:root{--bg:#0b0f14;--card:#121923;--card2:#182130;--line:#243044;--txt:#e8eef7;--mut:#8b9bb2;
+--lime:#c6ff3d;--cyan:#38d9ff;--amber:#ffb454;--pink:#ff5d8f;--red:#ff4d4d;--ok:#3ddc84;--r:16px}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(1200px 600px at 80% -10%,#16311f55,transparent),var(--bg);color:var(--txt);
+font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+button,input,select{font:inherit;color:inherit}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#0b0f14ee;backdrop-filter:blur(8px);z-index:5}
+.brand{font-weight:800;letter-spacing:.3px;font-size:18px}.brand span{color:var(--lime)}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:var(--card2);border:1px solid var(--line);font-size:12px;color:var(--mut)}
+.pill::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--red)}.pill.on{color:var(--txt)}.pill.on::before{background:var(--ok);box-shadow:0 0 8px var(--ok)}
+.tabs{display:flex;gap:6px;padding:10px 16px 0;max-width:1100px;margin:0 auto}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:10px 14px;color:var(--mut);cursor:pointer;font-weight:600}
+.tabs button.active{color:var(--lime);border-color:var(--lime)}
+main{max-width:1100px;margin:0 auto;padding:16px;display:grid;gap:16px}
+.grid2{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:900px){.grid2{grid-template-columns:1fr 1fr}}
+.card{background:linear-gradient(180deg,var(--card),#0f151e);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.card h2{margin:0 0 12px;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:var(--mut)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.rings{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(min-width:700px){.rings{grid-template-columns:repeat(4,1fr)}}
+.ring{text-align:center}.ring svg{width:100%;max-width:130px;transform:rotate(-90deg)}
+.ring .bg{fill:none;stroke:var(--card2);stroke-width:10}
+.ring .fg{fill:none;stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .6s ease,stroke .3s}
+.ring-wrap{position:relative;max-width:130px;margin:0 auto}.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-center b{font-size:24px}.ring-center small{color:var(--mut);font-size:11px}
+.ring-label{font-weight:700;margin-top:6px}.ring-sub{color:var(--mut);font-size:12px;min-height:34px}
+.ring.over .ring-sub{color:var(--red)}
+.big{font-size:44px;font-weight:800;line-height:1}.big small{font-size:18px;color:var(--mut);font-weight:600}
+.chip{display:inline-block;padding:3px 9px;border-radius:999px;font-size:12px;border:1px solid var(--line);background:var(--card2);margin:2px 4px 2px 0}
+.chip.p{color:var(--cyan)}.chip.c{color:var(--amber)}.chip.f{color:var(--pink)}.chip.k{color:var(--lime)}
+.advice{margin-top:12px;padding:12px;border-left:3px solid var(--lime);background:var(--card2);border-radius:8px}
+.muted{color:var(--mut);font-size:12px}
+.btn{background:var(--lime);color:#0b0f14;border:0;border-radius:12px;padding:11px 16px;font-weight:800;cursor:pointer}
+.btn:disabled{opacity:.45;cursor:not-allowed}.btn.sec{background:var(--card2);color:var(--txt);border:1px solid var(--line)}
+.btn.dng{background:#3a1620;color:#ff9aa8;border:1px solid #5a2330}
+.list{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.item{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px;background:var(--card2);border-radius:12px}
+.item .t{color:var(--mut);font-size:12px}.item .n{font-weight:700}.item .m{color:var(--mut);font-size:12px}
+.x{background:none;border:0;color:var(--mut);font-size:20px;cursor:pointer;padding:4px 8px}.x:hover{color:var(--red)}
+.form{display:grid;gap:12px;grid-template-columns:1fr}@media(min-width:700px){.form{grid-template-columns:1fr 1fr}}
+label{display:grid;gap:4px;font-size:12px;color:var(--mut)}
+input,select{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:10px;color:var(--txt);width:100%}
+input:focus,select:focus{outline:2px solid var(--lime);outline-offset:0}
+.kv{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}@media(min-width:700px){.kv{grid-template-columns:repeat(4,1fr)}}
+.kv div{background:var(--card2);border-radius:12px;padding:10px}.kv b{display:block;font-size:20px}.kv span{color:var(--mut);font-size:12px}
+.gate{position:fixed;inset:0;background:#0b0f14f2;display:flex;align-items:center;justify-content:center;padding:20px;z-index:20}
+.gate .card{max-width:460px;width:100%}.gate[hidden]{display:none}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#1d2736;border:1px solid var(--line);padding:10px 16px;border-radius:12px;z-index:30;opacity:0;pointer-events:none;transition:opacity .25s;max-width:92vw}
+#toast.show{opacity:1}
+[hidden]{display:none!important}
+.warn{background:#2a2110;border:1px solid #5a4620;color:#ffd58a;padding:10px 12px;border-radius:10px;font-size:13px}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">⚖️ NutriScale <span>Coach</span></div>
+  <div class="pills"><span id="pillCloud" class="pill">Cloud</span><span id="pillScale" class="pill">Balance</span></div>
+</header>
+<nav class="tabs" id="tabs">
+  <button data-tab="dash" class="active">Tableau de bord</button>
+  <button data-tab="profile">Profil &amp; objectifs</button>
+</nav>
+
+<main>
+<section id="tab-dash" class="grid" style="display:grid;gap:16px">
+  <div class="card">
+    <div class="row"><h2 id="dayTitle">Objectifs du jour</h2><span class="chip" id="goalChip">—</span></div>
+    <div id="noTargets" class="warn" hidden>Renseigne ton profil (onglet « Profil &amp; objectifs ») pour obtenir tes objectifs.</div>
+    <div class="rings" id="rings"></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>Balance en direct</h2>
+      <div class="row"><div class="big" id="liveW">—<small> g</small></div><span class="chip" id="livePhase">—</span></div>
+      <div class="muted" id="liveInfo" style="margin-top:8px"></div>
+      <div class="row" style="margin-top:14px"><button class="btn sec" id="btnTare">Tarer la balance à distance</button><span class="muted" id="tareMsg"></span></div>
+    </div>
+    <div class="card">
+      <h2>Dernier scan en direct</h2>
+      <div id="scanEmpty" class="muted">Aucun scan pour l'instant. Pose un aliment sur la balance.</div>
+      <div id="scanBox" hidden>
+        <div class="row"><div><div class="big" id="scW" style="font-size:34px">0<small> g</small></div><div style="font-weight:800;font-size:18px;margin-top:4px" id="scName">—</div></div>
+          <div class="muted" id="scTime"></div></div>
+        <div style="margin-top:8px" id="scChips"></div>
+        <div class="advice"><div class="muted" style="margin-bottom:4px">Conseil du coach IA — estimation, pas un avis médical</div><div id="scAdvice"></div></div>
+        <div class="row" style="margin-top:12px"><button class="btn" id="btnAdd">Ajouter à ma journée</button><span class="muted" id="scNote"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row"><h2 id="jTitle">Journal alimentaire du jour</h2><button class="btn dng" id="btnReset">Réinitialiser la journée</button></div>
+    <ul class="list" id="journal"></ul>
+    <div id="jEmpty" class="muted">Aucun repas ajouté aujourd'hui. Le journal repart à zéro chaque jour (les jours passés sont conservés).</div>
+    <div class="muted" id="jTotal" style="margin-top:10px"></div>
+  </div>
+</section>
+
+<section id="tab-profile" style="display:none;gap:16px">
+  <div class="card">
+    <h2>Profil &amp; objectif sportif</h2>
+    <form class="form" id="profileForm" autocomplete="off">
+      <label>Prénom<input id="fName" maxlength="30" required></label>
+      <label>Objectif sportif<select id="fGoal"><option value="masse">Prise de masse / Muscle</option><option value="seche">Sèche / Perte de gras</option><option value="maintien" selected>Maintien</option></select></label>
+      <label>Poids (kg)<input id="fW" type="number" min="30" max="300" step="0.1" required></label>
+      <label>Taille (cm)<input id="fH" type="number" min="120" max="230" step="1" required></label>
+      <label>Âge<input id="fA" type="number" min="14" max="90" step="1" required></label>
+      <label>Sexe<select id="fS"><option value="H">Homme</option><option value="F">Femme</option></select></label>
+      <label style="grid-column:1/-1">Niveau d'activité<select id="fAct">
+        <option value="sedentaire">Sédentaire (peu ou pas d'exercice)</option><option value="leger">Légèrement actif (1–3 séances/sem.)</option>
+        <option value="modere" selected>Modérément actif (3–5 séances/sem.)</option><option value="intense">Très actif (6–7 séances/sem.)</option>
+        <option value="tres_intense">Extrêmement actif (2 séances/jour, travail physique)</option></select></label>
+      <div style="grid-column:1/-1"><button class="btn" type="submit">Calculer et enregistrer</button></div>
+    </form>
+  </div>
+  <div class="card" id="resCard" hidden>
+    <h2>Besoins journaliers estimés</h2>
+    <div class="kv" id="resKv"></div>
+    <div class="warn" id="resNote" style="margin-top:12px" hidden></div>
+    <p class="muted">Formule de Mifflin-St Jeor × niveau d'activité, ajustée selon l'objectif. Ce sont des estimations générales qui ne remplacent pas l'avis d'un médecin ou d'un diététicien.</p>
+  </div>
+  <div class="card"><h2>Balance connectée</h2><div class="muted" id="scaleInfo"></div><div style="margin-top:10px"><button class="btn sec" id="btnLogout">Changer de balance</button></div></div>
+</section>
+</main>
+
+<div class="gate" id="gate" hidden><div class="card">
+  <h2>Connexion à ta balance</h2>
+  <div id="cfgWarn" class="warn" hidden>Configuration Firebase manquante : remplace les valeurs <b>firebaseConfig</b> en haut du script de ce fichier (voir GUIDE).</div>
+  <form id="gateForm" class="form" style="grid-template-columns:1fr;margin-top:10px">
+    <label>Identifiant de la balance (SCALE_ID)<input id="gId" minlength="20" maxlength="80" placeholder="le même que dans le firmware" required autocomplete="off" spellcheck="false"></label>
+    <button class="btn" type="submit">Se connecter</button>
+  </form>
+  <p class="muted">Cet identifiant long joue le rôle de mot de passe : ne le partage pas. Il est mémorisé uniquement dans ce navigateur.</p>
+</div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- ============ LOGIQUE PURE (testée avec Node : tests/test_web.js) ============ -->
+<script id="ns-logic">
+(function (root) {
+  const ACTIVITY = { sedentaire: 1.2, leger: 1.375, modere: 1.55, intense: 1.725, tres_intense: 1.9 };
+  const PROT_G_KG = { masse: 2.0, seche: 2.2, maintien: 1.6 };
+  const FAT_G_KG = { masse: 1.0, seche: 0.8, maintien: 1.0 };
+  const LABEL = { masse: 'Prise de masse', seche: 'Sèche', maintien: 'Maintien' };
+
+  function calcTargets(p) {
+    const w = Number(p.poids), h = Number(p.taille), a = Number(p.age);
+    if (!(w >= 30 && w <= 300) || !(h >= 120 && h <= 230) || !(a >= 14 && a <= 90)) return { error: 'Valeurs hors limites (poids 30–300 kg, taille 120–230 cm, âge 14–90).' };
+    if (!ACTIVITY[p.activite] || !PROT_G_KG[p.objectif] || (p.sexe !== 'H' && p.sexe !== 'F')) return { error: 'Choix invalide.' };
+    const bmr = 10 * w + 6.25 * h - 5 * a + (p.sexe === 'H' ? 5 : -161);
+    const tdee = bmr * ACTIVITY[p.activite];
+    const notes = [];
+    let kcal;
+    if (p.objectif === 'masse') kcal = tdee * 1.10;
+    else if (p.objectif === 'seche') {
+      if (a < 18) { kcal = tdee; notes.push("Moins de 18 ans : aucun déficit calorique n'est proposé (maintien). Parle-en à un professionnel de santé."); }
+      else kcal = Math.max(tdee * 0.80, bmr);
+    } else kcal = tdee;
+    const protein = Math.round(w * PROT_G_KG[p.objectif]);
+    const fat = Math.round(w * FAT_G_KG[p.objectif]);
+    let carbs = Math.round((kcal - 4 * protein - 9 * fat) / 4);
+    if (carbs < 0) { carbs = 0; kcal = 4 * protein + 9 * fat; notes.push('Apport calorique relevé pour couvrir protéines et lipides minimaux.'); }
+    return { bmr: Math.round(bmr), tdee: Math.round(tdee), kcal: Math.round(kcal), protein, carbs, fat, notes };
+  }
+
+  function dayKey(d) {
+    const p = (n) => String(n).padStart(2, '0');
+    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+  }
+  const num = (x) => { const n = Number(x); return Number.isFinite(n) ? n : 0; };
+  function sumEntries(entries) {
+    const t = { kcal: 0, protein: 0, carbs: 0, fat: 0, weight: 0, count: 0 };
+    Object.values(entries || {}).forEach((e) => {
+      t.kcal += num(e.calories); t.protein += num(e.proteines); t.carbs += num(e.glucides); t.fat += num(e.lipides); t.weight += num(e.poids_g); t.count++;
+    });
+    return t;
+  }
+  // Jauge : fraction affichée (0..1), dépassement, texte "120 g / 165 g Protéines — Reste 45 g"
+  function ringModel(cur, target, name, unit) {
+    cur = Math.round(num(cur)); target = Math.round(num(target));
+    const frac = target > 0 ? Math.min(cur / target, 1) : 0;
+    const over = target > 0 && cur > target * 1.05;
+    let text;
+    if (target <= 0) text = cur + ' ' + unit + ' ' + name;
+    else if (cur <= target) text = cur + ' ' + unit + ' / ' + target + ' ' + unit + ' ' + name + ' — Reste ' + (target - cur) + ' ' + unit;
+    else text = cur + ' ' + unit + ' / ' + target + ' ' + unit + ' ' + name + ' — Dépassé de ' + (cur - target) + ' ' + unit;
+    return { frac, over, text };
+  }
+  function isOnline(tsMs, nowMs, offsetMs, maxAgeMs) {
+    if (!tsMs) return false;
+    return (nowMs + (offsetMs || 0) - tsMs) < (maxAgeMs || 45000);
+  }
+  function ago(tsMs, nowMs, offsetMs) {
+    const s = Math.max(0, Math.round((nowMs + (offsetMs || 0) - tsMs) / 1000));
+    if (s < 60) return 'il y a ' + s + ' s';
+    if (s < 3600) return 'il y a ' + Math.round(s / 60) + ' min';
+    return 'il y a ' + Math.round(s / 3600) + ' h';
+  }
+  const PHASE = { uncalibrated: 'Non calibrée', empty: 'Au repos', settling: 'Stabilisation…', analyzing: "Analyse IA…", result: 'Résultat prêt', error: 'Erreur IA' };
+  const api = { calcTargets, dayKey, sumEntries, ringModel, isOnline, ago, num, PHASE, LABEL };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.NS = api;
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+
+<script type="module" id="ns-app">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, onValue, set, update, remove, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+// ====================== À REMPLACER (Firebase > Paramètres du projet > Vos applications > Web) ======================
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDnjleqlmuDC2I1rqMaFZ5l2iZtqhhnuMU",
+  authDomain: "balance-nutrition-ia.firebaseapp.com",
+  databaseURL: "https://balance-nutrition-ia-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "balance-nutrition-ia",
+  storageBucket: "balance-nutrition-ia.firebasestorage.app",
+  messagingSenderId: "1094065069266",
+  appId: "1:1094065069266:web:bcdd68b08d56a63a9f610b",
+  measurementId: "G-KM1DTDWKKF"
+};
+
+// ======================================================================================================================
+
+const NS = window.NS;
+const $ = (id) => document.getElementById(id);
+const S = { id: null, db: null, base: '', unsub: [], jUnsub: null, targets: null, status: null, scan: null, entries: {}, day: NS.dayKey(new Date()), offset: 0, tareAt: 0 };
+const configOk = !String(firebaseConfig.databaseURL).includes('VOTRE-PROJET');
+
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; }
+let toastTimer;
+function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 3500); }
+const fmt1 = (x) => (Math.round(NS.num(x) * 10) / 10).toString();
+
+// ---------- jauges ----------
+const RINGS = [
+  { k: 'kcal', name: 'Calories', unit: 'kcal', color: 'var(--lime)' },
+  { k: 'protein', name: 'Protéines', unit: 'g', color: 'var(--cyan)' },
+  { k: 'carbs', name: 'Glucides', unit: 'g', color: 'var(--amber)' },
+  { k: 'fat', name: 'Lipides', unit: 'g', color: 'var(--pink)' }
+];
+const CIRC = 2 * Math.PI * 52;
+function buildRings() {
+  const box = $('rings'); box.textContent = '';
+  RINGS.forEach((r) => {
+    const w = el('div', 'ring'); w.id = 'ring-' + r.k;
+    w.innerHTML = '<div class="ring-wrap"><svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" cx="60" cy="60" r="52"/></svg><div class="ring-center"><b>0</b><small></small></div></div><div class="ring-label"></div><div class="ring-sub"></div>';
+    const fg = w.querySelector('.fg'); fg.style.stroke = r.color; fg.style.strokeDasharray = CIRC; fg.style.strokeDashoffset = CIRC;
+    w.querySelector('small').textContent = r.unit; w.querySelector('.ring-label').textContent = r.name;
+    box.appendChild(w);
+  });
+}
+function renderRings() {
+  const tot = NS.sumEntries(S.entries); const t = S.targets || {};
+  const tg = { kcal: t.kcal, protein: t.proteines, carbs: t.glucides, fat: t.lipides };
+  $('noTargets').hidden = !!S.targets;
+  RINGS.forEach((r) => {
+    const m = NS.ringModel(tot[r.k], tg[r.k], r.name, r.unit); const w = $('ring-' + r.k);
+    w.classList.toggle('over', m.over);
+    const fg = w.querySelector('.fg'); fg.style.strokeDashoffset = CIRC * (1 - m.frac); fg.style.stroke = m.over ? 'var(--red)' : r.color;
+    w.querySelector('b').textContent = Math.round(tot[r.k]); w.querySelector('.ring-sub').textContent = m.text;
+  });
+}
+
+// ---------- balance & dernier scan ----------
+function renderLive() {
+  const st = S.status, now = Date.now();
+  const online = !!st && NS.isOnline(st.ts, now, S.offset, 45000);
+  $('pillScale').classList.toggle('on', online); $('pillScale').textContent = online ? 'Balance en ligne' : 'Balance hors ligne';
+  const w = st && online && typeof st.weight_g === 'number' ? fmt1(st.weight_g) : '—';
+  $('liveW').innerHTML = ''; $('liveW').append(document.createTextNode(w), Object.assign(el('small', '', ' g')));
+  $('livePhase').textContent = online ? (NS.PHASE[st.phase] || st.phase || '—') : 'Hors ligne';
+  $('liveInfo').textContent = st ? (online ? 'Wi-Fi ' + (st.rssi || '?') + ' dBm · caméra ' + (st.cam_ok ? 'OK' : 'KO') + ' · HX711 ' + (st.hx711_ok ? 'OK' : 'KO') + ' · modèle ' + (st.model || '?') : 'Dernier signal ' + NS.ago(st.ts, now, S.offset)) : 'Aucun signal de la balance.';
+  $('btnTare').disabled = !online || S.tareAt > 0;
+  if (S.tareAt && st && st.lastTare && st.lastTare.ts >= S.tareAt - 2000) { $('tareMsg').textContent = st.lastTare.ok ? 'Tare effectuée ✔' : 'Tare échouée ✖'; S.tareAt = 0; setTimeout(() => { $('tareMsg').textContent = ''; renderLive(); }, 4000); }
+  else if (S.tareAt && now + S.offset - S.tareAt > 20000) { $('tareMsg').textContent = 'Pas de réponse de la balance'; S.tareAt = 0; setTimeout(() => { $('tareMsg').textContent = ''; renderLive(); }, 4000); }
+}
+function renderScan() {
+  const s = S.scan; $('scanEmpty').hidden = !!s; $('scanBox').hidden = !s; if (!s) return;
+  $('scW').innerHTML = ''; $('scW').append(document.createTextNode(fmt1(s.poids_g)), el('small', '', ' g'));
+  $('scName').textContent = s.aliment || 'inconnu';
+  $('scTime').textContent = s.ts ? NS.ago(s.ts, Date.now(), S.offset) : '';
+  const chips = $('scChips'); chips.textContent = '';
+  [['k', Math.round(NS.num(s.calories)) + ' kcal'], ['p', 'P ' + fmt1(s.proteines) + ' g'], ['c', 'G ' + fmt1(s.glucides) + ' g'], ['f', 'L ' + fmt1(s.lipides) + ' g']].forEach(([c, t]) => chips.appendChild(el('span', 'chip ' + c, t)));
+  $('scAdvice').textContent = s.conseil_coach || '—';
+  $('scNote').textContent = (s.corrige ? 'Valeurs corrigées automatiquement (incohérence). ' : '') + (s.objectif ? 'Objectif : ' + (NS.LABEL[s.objectif] || s.objectif) : '');
+  const added = !!S.entries[s.id]; $('btnAdd').disabled = added; $('btnAdd').textContent = added ? 'Déjà ajouté ✔' : 'Ajouter à ma journée';
+}
+function renderJournal() {
+  const list = $('journal'); list.textContent = '';
+  const items = Object.entries(S.entries).sort((a, b) => NS.num(a[1].ts || a[1].addedAt) - NS.num(b[1].ts || b[1].addedAt));
+  items.forEach(([id, e]) => {
+    const li = el('li', 'item');
+    const t = e.ts || e.addedAt; li.appendChild(el('div', 't', t ? new Date(t).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : '--:--'));
+    const mid = el('div'); mid.appendChild(el('div', 'n', e.aliment || 'inconnu'));
+    mid.appendChild(el('div', 'm', fmt1(e.poids_g) + ' g · ' + Math.round(NS.num(e.calories)) + ' kcal · P ' + fmt1(e.proteines) + ' · G ' + fmt1(e.glucides) + ' · L ' + fmt1(e.lipides)));
+    li.appendChild(mid);
+    const x = el('button', 'x', '✕'); x.title = 'Supprimer'; x.setAttribute('aria-label', 'Supprimer ' + (e.aliment || 'ce repas'));
+    x.addEventListener('click', () => { if (confirm('Supprimer « ' + (e.aliment || 'ce repas') + ' » ?')) remove(ref(S.db, S.base + '/journal/' + S.day + '/' + id)).catch(dbErr); });
+    li.appendChild(x); list.appendChild(li);
+  });
+  $('jEmpty').hidden = items.length > 0;
+  const tot = NS.sumEntries(S.entries);
+  $('jTotal').textContent = items.length ? 'Total : ' + Math.round(tot.kcal) + ' kcal · P ' + fmt1(tot.protein) + ' g · G ' + fmt1(tot.carbs) + ' g · L ' + fmt1(tot.fat) + ' g · ' + Math.round(tot.weight) + ' g pesés' : '';
+  $('jTitle').textContent = 'Journal alimentaire — ' + new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+  $('dayTitle').textContent = 'Objectifs du jour';
+}
+function renderAll() { renderRings(); renderLive(); renderScan(); renderJournal(); }
+
+// ---------- profil ----------
+function showTargets(r) {
+  const box = $('resKv'); box.textContent = ''; $('resCard').hidden = false;
+  [['Métabolisme de base', r.bmr + ' kcal'], ['Dépense totale', r.tdee + ' kcal'], ['Objectif calories', r.kcal + ' kcal'], ['Protéines', r.protein + ' g'], ['Glucides', r.carbs + ' g'], ['Lipides', r.fat + ' g']]
+    .forEach(([k, v]) => { const d = el('div'); d.appendChild(el('b', '', v)); d.appendChild(el('span', '', k)); box.appendChild(d); });
+  $('resNote').hidden = !r.notes.length; $('resNote').textContent = r.notes.join(' ');
+}
+function fillProfile(p) {
+  if (!p) return; $('fName').value = p.prenom || ''; $('fGoal').value = p.objectif || 'maintien'; $('fW').value = p.poids || ''; $('fH').value = p.taille || '';
+  $('fA').value = p.age || ''; $('fS').value = p.sexe || 'H'; $('fAct').value = p.activite || 'modere';
+  const r = NS.calcTargets(p); if (!r.error) showTargets(r);
+}
+
+// ---------- Firebase ----------
+function dbErr(e) { console.error(e); toast(String(e && e.code).includes('PERMISSION') ? 'Accès refusé : vérifie les règles et l\'identifiant.' : 'Erreur Firebase : ' + (e && e.message || e)); }
+function listen(path, cb) { S.unsub.push(onValue(ref(S.db, path), cb, dbErr)); }
+function subscribeJournal() {
+  if (S.jUnsub) S.jUnsub();
+  S.day = NS.dayKey(new Date());
+  S.jUnsub = onValue(ref(S.db, S.base + '/journal/' + S.day), (snap) => { S.entries = snap.val() || {}; renderRings(); renderScan(); renderJournal(); }, dbErr);
+}
+function connect(id) {
+  S.id = id; S.base = 'scales/' + id; localStorage.setItem('ns_scale_id', id);
+  const app = initializeApp(firebaseConfig); S.db = getDatabase(app);
+  S.unsub.push(onValue(ref(S.db, '.info/connected'), (s) => { const on = !!s.val(); $('pillCloud').classList.toggle('on', on); $('pillCloud').textContent = on ? 'Cloud connecté' : 'Cloud déconnecté'; }));
+  S.unsub.push(onValue(ref(S.db, '.info/serverTimeOffset'), (s) => { S.offset = NS.num(s.val()); }));
+  listen(S.base + '/profile', (s) => { const p = s.val(); if (p && !S.profileFilled) { fillProfile(p); S.profileFilled = true; } });
+  listen(S.base + '/targets', (s) => { S.targets = s.val(); renderRings(); });
+  listen(S.base + '/goal', (s) => { const g = s.val(); $('goalChip').textContent = g ? 'Objectif : ' + (NS.LABEL[g] || g) : 'Objectif non défini'; });
+  listen(S.base + '/status', (s) => { S.status = s.val(); renderLive(); });
+  listen(S.base + '/lastScan', (s) => { S.scan = s.val(); renderScan(); });
+  subscribeJournal();
+  $('scaleInfo').textContent = 'Identifiant : ' + id.slice(0, 4) + '…' + id.slice(-4);
+  $('gate').hidden = true;
+}
+function disconnect() { S.unsub.forEach((u) => u()); S.unsub = []; if (S.jUnsub) S.jUnsub(); S.jUnsub = null; localStorage.removeItem('ns_scale_id'); location.reload(); }
+
+// ---------- actions ----------
+$('profileForm').addEventListener('submit', (ev) => {
+  ev.preventDefault();
+  const p = { prenom: $('fName').value.trim().slice(0, 30), poids: Number($('fW').value), taille: Number($('fH').value), age: Number($('fA').value), sexe: $('fS').value, activite: $('fAct').value, objectif: $('fGoal').value };
+  const r = NS.calcTargets(p); if (r.error) { toast(r.error); return; }
+  showTargets(r);
+  update(ref(S.db, S.base), { profile: p, goal: p.objectif, targets: { kcal: r.kcal, proteines: r.protein, glucides: r.carbs, lipides: r.fat } })
+    .then(() => toast('Profil et objectifs enregistrés ✔')).catch(dbErr);
+});
+$('btnAdd').addEventListener('click', () => {
+  const s = S.scan; if (!s || !s.id || S.entries[s.id]) return;
+  set(ref(S.db, S.base + '/journal/' + S.day + '/' + s.id), { aliment: s.aliment, poids_g: s.poids_g, proteines: s.proteines, glucides: s.glucides, lipides: s.lipides, calories: s.calories, ts: s.ts || null, addedAt: serverTimestamp() })
+    .then(() => toast('Ajouté à ta journée ✔')).catch(dbErr);
+});
+$('btnReset').addEventListener('click', () => { if (confirm('Supprimer tous les repas d\'aujourd\'hui ?')) remove(ref(S.db, S.base + '/journal/' + S.day)).then(() => toast('Journée réinitialisée')).catch(dbErr); });
+$('btnTare').addEventListener('click', () => {
+  S.tareAt = Date.now() + S.offset; $('tareMsg').textContent = 'Tare demandée…'; $('btnTare').disabled = true;
+  set(ref(S.db, S.base + '/command/tare'), serverTimestamp()).catch((e) => { S.tareAt = 0; $('tareMsg').textContent = ''; dbErr(e); });
+});
+$('btnLogout').addEventListener('click', disconnect);
+$('gateForm').addEventListener('submit', (ev) => { ev.preventDefault(); const id = $('gId').value.trim(); if (id.length < 20 || !/^[A-Za-z0-9_-]+$/.test(id)) { toast('Identifiant invalide (≥ 20 caractères : lettres, chiffres, - et _).'); return; } connect(id); });
+$('tabs').addEventListener('click', (ev) => {
+  const b = ev.target.closest('button[data-tab]'); if (!b) return;
+  document.querySelectorAll('#tabs button').forEach((x) => x.classList.toggle('active', x === b));
+  $('tab-dash').style.display = b.dataset.tab === 'dash' ? 'grid' : 'none'; $('tab-profile').style.display = b.dataset.tab === 'profile' ? 'grid' : 'none';
+});
+
+// ---------- démarrage ----------
+buildRings(); renderRings();
+if (!configOk) { $('cfgWarn').hidden = false; $('gate').hidden = false; $('gateForm').querySelector('button').disabled = true; }
+else {
+  const saved = localStorage.getItem('ns_scale_id');
+  if (saved) connect(saved); else $('gate').hidden = false;
+}
+setInterval(() => {                                   // rafraîchit les durées relatives, l'état en ligne et le changement de jour
+  if (!S.db) return;
+  if (NS.dayKey(new Date()) !== S.day) subscribeJournal();
+  renderLive(); renderScan();
+}, 5000);
+</script>
+</body>
+</html>
